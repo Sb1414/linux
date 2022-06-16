@@ -2,7 +2,7 @@
 1. 
     * Установка Ubuntu 20.04 Server LTS без графического интерфейса 
     * Проверяем версию Ubuntu командой `cat /etc/issue`<br>
-    ![Версия Ubuntu](src/screen/part_1.png)<br>*Версия Ubuntu*<br>
+    ![Версия Ubuntu](screen/part_1.png)<br>*Версия Ubuntu*<br>
 
 ## Part 2. Создание пользователя
 1. 
