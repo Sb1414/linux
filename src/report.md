@@ -2,35 +2,35 @@
 1. 
     * Установка Ubuntu 20.04 Server LTS без графического интерфейса 
     * Проверяем версию Ubuntu командой `cat /etc/issue`<br>
-    ![Версия Ubuntu](src/screen/part_1.png)<br>*Версия Ubuntu*<br>
+    ![Версия Ubuntu](screen/part_1.png)<br>*Версия Ubuntu*<br>
 
 ## Part 2. Создание пользователя
 1. 
     * Создаём нового пользователя командой `sudo adduser evetteis2`<br>
-    ![Создание нового пользователя](src/screen/part_2.1.png)<br>*Создание нового пользователя*
+    ![Создание нового пользователя](screen/part_2.1.png)<br>*Создание нового пользователя*
     * Вызываем команду `sudo usermod -aG adm evetteis2`<br>
-    ![evetteis2 даны права администратора](src/screen/part_2.2.png)<br>*evetteis2 даны права администратора*
+    ![evetteis2 даны права администратора](screen/part_2.2.png)<br>*evetteis2 даны права администратора*
     * Вызываем команду `cat /etc/passwd` <br>
-    ![Проверка создания пользователя](src/screen/part_2.3.png)<br>*Проверка создания пользователя*<br>
+    ![Проверка создания пользователя](screen/part_2.3.png)<br>*Проверка создания пользователя*<br>
 
 ## Part 3. Настройка сети ОС
 1. 
     * Изменяем название машины на user-1 с помощью команды `hostnamectl set-hostname user-1`<br>
-    ![Изменяем название машины](src/screen/part_3.1.png)<br>*Изменяем название машины*
+    ![Изменяем название машины](screen/part_3.1.png)<br>*Изменяем название машины*
     * Выполняем перезагрузку для сохранения изменений
     * Вызов `cat /etc/hostname` <br>
-    ![Проверяем изменение названия машины](src/screen/part_3.2.png)<br>*Проверяем изменение названия машины*<br>
+    ![Проверяем изменение названия машины](screen/part_3.2.png)<br>*Проверяем изменение названия машины*<br>
 
 2. 
     * Проверяем текущие настройки часового пояса командой `timedatectl`<br>
-    ![Проверка часового пояса](src/screen/part_3.3.png)<br>*Проверка часового пояса*
+    ![Проверка часового пояса](screen/part_3.3.png)<br>*Проверка часового пояса*
     * Устанавливаем нужный часовой пояс командой  `sudo timedatectl set-timezone Europe/Moscow`<br>
     * Проверяем изменения командой `timedatectl`<br>
-    ![Установка часового пояса и проверка изменений](src/screen/part_3.4.png)<br>*Установка часового пояса и проверка изменений*<br>
+    ![Установка часового пояса и проверка изменений](screen/part_3.4.png)<br>*Установка часового пояса и проверка изменений*<br>
 
 3. 
     * Вывод названия сетевых интерфейсов с помощью команды `ls /sys/class/net`<br>
-    ![Названия сетевых интерфейсов](src/screen/part_3.5.png)<br>*Названия сетевых интерфейсов*
+    ![Названия сетевых интерфейсов](screen/part_3.5.png)<br>*Названия сетевых интерфейсов*
     * **Loopback** — совокупность методов, нужных для корректной работы маршрутизатора и передачи данных.<br>
     * Сам интерфейс же является отображением логических процессов в маршрутизаторе. Также саму технологию используют и для других целей:<br>
         1) тестирование передачи данных от обслуживающего центра коммутации;<br>
@@ -40,46 +40,46 @@
 
 4. 
     * С помощью команды `ip r` получаем ip адрес устройства, на котором мы работаем, от DHCP сервера.<br>
-    ![ip-адрес устройства](src/screen/part_3.6.png)<br>*ip-адрес устройства*
+    ![ip-адрес устройства](screen/part_3.6.png)<br>*ip-адрес устройства*
     * **Dynamic Host Configuration Protocol (DHCP)** - это протокол управления сетью, используемый в сетях TCP/IP, в котором DHCP-сервер динамически присваивает каждому устройству IP-адрес и другие параметры сетевой конфигурации, чтобы они могли связываться с другими IP-сетями.<br>
 
 5. 
     * Выводим внешний(ip) и внутренний(gw) ip-адреса шлюза командами `wget -q -O - ifconfig.me/ip` и `ip route | grep default`<br>
-    ![ip-адреса шлюза](src/screen/part_3.7.png)<br>*ip-адреса шлюза*<br>
+    ![ip-адреса шлюза](screen/part_3.7.png)<br>*ip-адреса шлюза*<br>
 
 6. 
     * Задаем статичные настройки ip, gw, dns командой `sudo nano /etc/resolv.conf`<br>
-    ![Редактирование настроек ip, gw и dns](src/screen/part_3.8.png)<br>*Редактирование настроек ip, gw и dns*<br>
+    ![Редактирование настроек ip, gw и dns](screen/part_3.8.png)<br>*Редактирование настроек ip, gw и dns*<br>
 
 7. 
     * Перезагружаем виртуальную машину командой `reboot`<br>
     * Проверяем, что статичные сетевые настройки (ip, gw, dns) соответствуют данным, командой  `ping -c 8 1.1.1.1 && ping -c 8 ya.ru`<br>
-    ![Проверяем настройки](src/screen/part_3.9.png)<br>*Проверяем настройки<br>
+    ![Проверяем настройки](screen/part_3.9.png)<br>*Проверяем настройки<br>
 
 ## Part 4. Обновление ОС
 1. 
     * Командой `sudo apt update` узнаём, сколько есть пакетов обновления<br>
-    ![Проверяем пакеты обновления](src/screen/part_4.1.png)<br>*Проверяем пакеты обновления*<br>
+    ![Проверяем пакеты обновления](screen/part_4.1.png)<br>*Проверяем пакеты обновления*<br>
     * Обновляем системные пакеты до последней, на момент выполнения задания, версии командой `sudo apt full-upgrade`<br>
-    ![Загружаем пакеты обновления](src/screen/part_4.2.png)<br>*Загружаем пакеты обновления*<br>
+    ![Загружаем пакеты обновления](screen/part_4.2.png)<br>*Загружаем пакеты обновления*<br>
     * Проверяем обновления командой `sudo do-release-upgrade`<br>
-    ![Проверяем обновления](src/screen/part_4.3.png)<br>*Проверяем обновления*<br>
+    ![Проверяем обновления](screen/part_4.3.png)<br>*Проверяем обновления*<br>
 
 ## Part 5. Использование команды sudo
 1. 
     * Разрешаем пользователю(evetteis2), созданному в Part 2, выполнять команду sudo командой `sudo usermod -a -G sudo evetteis2`<br>
-    ![Разрешение sudo](src/screen/part_5.1.png)<br>*Разрешение sudo*<br>
+    ![Разрешение sudo](screen/part_5.1.png)<br>*Разрешение sudo*<br>
     * Переключение на пользователя `su - evetteis2`<br>
-    ![Переключение](src/screen/part_5.2.png)<br>*Переключение*<br>
+    ![Переключение](screen/part_5.2.png)<br>*Переключение*<br>
     * Изменение и проверка hostname ОС от имени пользователя *evetteis2* `sudo hostname Sb`<br>
-    ![hostname ОС от имени пользователя evetteis2](src/screen/part_5.3.png)<br>*hostname ОС от имени пользователя evetteis2*<br>
+    ![hostname ОС от имени пользователя evetteis2](screen/part_5.3.png)<br>*hostname ОС от имени пользователя evetteis2*<br>
 
 ## Part 6. Установка и настройка службы времени
 1. Настраиваем службу автоматической синхронизации времени<br>
     * Командой `date` вывести время, часового пояса, в котором мы сейчас находимся<br>
-    ![Вывод времени](src/screen/part_6.1.png)<br>*Вывод времени*<br>
+    ![Вывод времени](screen/part_6.1.png)<br>*Вывод времени*<br>
     * Вывод следующей команды должен содержать **NTPSynchronized=yes**: `timedatectl show`<br>
-    ![Вывод команды](src/screen/part_6.2.png)<br>*Вывод команды*<br>
+    ![Вывод команды](screen/part_6.2.png)<br>*Вывод команды*<br>
 
 ## Part 7. Установка и использование текстовых редакторов
 1. Устанавдиваем текстовый редактор MCEDIT командой `sudo apt install mc`<br>
@@ -89,75 +89,75 @@
     * Нажимаем на "i" в самом редакторе, для редактирования<br>
     * Пишем свой ник: "evetteis"<br>
     Для выхода с сохранением используем команды: `Esc`, `:wq`, `Enter`<br>
-    ![VIM](src/screen/part_7.1.png)<br>
+    ![VIM](screen/part_7.1.png)<br>
 
     * **NANO**: создаем файл с помощью команды `nano test_nano.txt`<br>
     * Пишем свой ник: "evetteis"<br>
     * Для выхода с сохранением используем команды: `ctrl+x`, `Y`, `Enter`<br>
-    ![NANO](src/screen/part_7.2.png)<br>
+    ![NANO](screen/part_7.2.png)<br>
 
     * **MCEDIT**: создаем файл с помощью команды `mcedit test_mcedit.txt`<br>
     * Пишем свой ник: "evetteis"<br>
     * Для выхода с сохранением используем команды: `fn+F2`, `Enter`, `fn+F10`<br>
-    ![MCEDIT](src/screen/part_7.3.png)<br>
+    ![MCEDIT](screen/part_7.3.png)<br>
 
 3. Редактирование файла с заменой слова без сохранения изменений:<br>
     * **VIM**: открываем файл с помощью команды `vim test_vim.txt`<br>
     * Нажимаем на "i" в самом редакторе, для редактирования<br>
     * Изменяем "evetteis" на "21 School 21"<br>
     * Для выхода без сохранения используем команды: `Esc`, **`:q!`**, `Enter`<br>
-    ![VIM](src/screen/part_7.4.png)<br>
+    ![VIM](screen/part_7.4.png)<br>
 
     * **NANO**: открываем файл с помощью команды `nano test_nano.txt`<br>
     * Изменяем "evetteis" на "21 School 21"<br>
     * Для выхода без сохранения используем команды: `ctrl+x`, `N`, `Enter`<br>
-    ![NANO](src/screen/part_7.5.png)<br>
+    ![NANO](screen/part_7.5.png)<br>
 
     * **MCEDIT**: открываем файл с помощью команды `mcedit test_mcedit.txt`.<br>
     * Изменяем "evetteis" на "21 School 21"<br>
     * Для выхода без сохранения используем команды: `fn+F10`, `No`, `Enter`<br>
-    ![MCEDIT](src/screen/part_7.6.png)<br>
+    ![MCEDIT](screen/part_7.6.png)<br>
 
 4. Редактирование файла с поиском и заменой слова:<br>
     * **VIM**: открываем файл с помощью команды `vim test_vim.txt`<br>
     * Для поиска в VIM вводим `/eve` и искомое слово выделяется в самом редакторе<br>
-    ![VIM](src/screen/part_7.7.png)<br>
+    ![VIM](screen/part_7.7.png)<br>
     * Для замены слова в VIM вводим `:%s/evetteis/21 School 21` и слово "evetteis" заменяется на "21 School 21"<br>
-    ![VIM](src/screen/part_7.8.png)<br>
-    ![VIM](src/screen/part_7.9.png)<br>
+    ![VIM](screen/part_7.8.png)<br>
+    ![VIM](screen/part_7.9.png)<br>
 
     * **NANO**: открываем файл с помощью команды `nano test_nano.txt`<br>
     * Для поиска в NANO вводим `ctrl+W`<br>
-    ![NANO](src/screen/part_7.10.png)<br>
+    ![NANO](screen/part_7.10.png)<br>
     * Для замены слова в NANO вводим `ctrl+\`, пишем "evetteis", нажимаем `Enter`, пишем "21 School 21", нажимаем `Enter`, выбираем `Y`<br>
-    ![NANO](src/screen/part_7.11.png)<br>
-    ![NANO](src/screen/part_7.12.png)<br>
+    ![NANO](screen/part_7.11.png)<br>
+    ![NANO](screen/part_7.12.png)<br>
 
     * **MCEDIT**: открываем файл с помощью команды `mcedit test_mcedit.txt`<br>
     * Для поиска в MCEDIT вводим `fn+F7`, вводим слово, которое хотим найти, нажимаем `Enter`<br>
-    ![MCEDIT](src/screen/part_7.13.png)<br>
+    ![MCEDIT](screen/part_7.13.png)<br>
     * И наше искомое слово выделяеся в редакторе<br>
-    ![MCEDIT](src/screen/part_7.14.png)<br>
+    ![MCEDIT](screen/part_7.14.png)<br>
     * Для замены слова в MCEDIT вводим `fn+F4` пишем "evetteis", нажимаем на клавишу "стрелка вниз", пишем "21 School 21", нажимаем `Enter`, выбираем `Replace`<br>
-    ![MCEDIT](src/screen/part_7.15.png)<br>
-    ![MCEDIT](src/screen/part_7.16.png)<br>
-    ![MCEDIT](src/screen/part_7.17.png)<br>
+    ![MCEDIT](screen/part_7.15.png)<br>
+    ![MCEDIT](screen/part_7.16.png)<br>
+    ![MCEDIT](screen/part_7.17.png)<br>
 
 ## Part 8. Установка и базовая настройка сервиса SSHD
 1. Устанавливаем службу SSHd командой `sudo apt install openssh-server`<br>
-    ![Команда для установки SSHd и служба SSHd](src/screen/part_8.1.png)<br>*Команда для установки SSHd и служба SSHd*<br>
+    ![Команда для установки SSHd и служба SSHd](screen/part_8.1.png)<br>*Команда для установки SSHd и служба SSHd*<br>
 
 2. Добавляем автостарт службы SSHd командой `sudo update-rc.d ssh defaults`<br>
-    ![Добавление автостарта](src/screen/part_8.2.png)<br>*Добавление автостарта*<br>
+    ![Добавление автостарта](screen/part_8.2.png)<br>*Добавление автостарта*<br>
 
 3. Изменяем порт SSHd командой `sudo vim /etc/ssh/sshd_config`<br>
     * Заменяем `#Port 22` на `#Port 2022`.<br>
-    ![Меняем порт 22 на 2022 SSHd](src/screen/part_8.3.png)<br>*Меняем порт 22 на 2022 SSHd*<br>
+    ![Меняем порт 22 на 2022 SSHd](screen/part_8.3.png)<br>*Меняем порт 22 на 2022 SSHd*<br>
     * Для применения изменений используем команду `/etc/init.d/ssh restart`<br>
-    ![Перезапуск](src/screen/part_8.4.png)<br>*Перезапуск*<br>
+    ![Перезапуск](screen/part_8.4.png)<br>*Перезапуск*<br>
 
 4. Проверяем наличие процесса SSHd командой `ps -axfv | grep sshd`<br>
-    ![Наличие процесса SSHd](src/screen/part_8.5.png)<br>*Наличие процесса SSHd*<br>
+    ![Наличие процесса SSHd](screen/part_8.5.png)<br>*Наличие процесса SSHd*<br>
     * Команда `ps` выводит список текущих процессов на вашем сервере. Используется обычно в сочетании с командой `grep`<br>
     * Флаги:<br>
         1) -a: Выбирает все процессы, кроме лидеров сеансов и процессов, не связанных с терминалом.<br>
@@ -166,9 +166,9 @@
         4) -v: Выводит информацию о версии<br>
 
 5. Устанавливаем **net-tools** `sudo apt install net-tools`<br>
-    ![Установка net-tools](src/screen/part_8.6.png)<br>*Установка net-tools*<br>
+    ![Установка net-tools](screen/part_8.6.png)<br>*Установка net-tools*<br>
     * Выполняем команду `netstat -tan`<br>
-    ![Выполнение команды netstat -tan](src/screen/part_8.7.png)<br>*Выполнение команды netstat -tan*<br>
+    ![Выполнение команды netstat -tan](screen/part_8.7.png)<br>*Выполнение команды netstat -tan*<br>
     * Опция **-a** показывает состояние всех сокетов; **-n** показывает ip адрес, а не сетевое имя; **-t** показывает только tcp соединения.<br>
     * Значения столбцов:<br>
         1) Proto - протокол, используемый сокетом;<br>
@@ -182,38 +182,38 @@
 ## Part 9. Установка и использование утилит **top**, **htop**
 1. **top**:<br>
     * Запуск утилиты **top**<br>
-    ![Запуск top](src/screen/part_9.1.png)<br>
+    ![Запуск top](screen/part_9.1.png)<br>
     * uptime:<br>
-    ![uptime](src/screen/part_9.2.png)<br>
+    ![uptime](screen/part_9.2.png)<br>
     * количество авторизированных пользователей<br>
-    ![количество авторизированных пользователей](src/screen/part_9.3.png)<br>
+    ![количество авторизированных пользователей](screen/part_9.3.png)<br>
     * общая загрузка системы<br>
-    ![общая загрузка системы](src/screen/part_9.4.png)<br>
+    ![общая загрузка системы](screen/part_9.4.png)<br>
     * общее количество процессов<br>
-    ![общее количество процессов](src/screen/part_9.5.png)<br>
+    ![общее количество процессов](screen/part_9.5.png)<br>
     * загрузка cpu<br>
-    ![загрузка cpu](src/screen/part_9.6.png)<br>
+    ![загрузка cpu](screen/part_9.6.png)<br>
     * загрузка памяти<br>
-    ![загрузка памяти](src/screen/part_9.7.png)<br>
+    ![загрузка памяти](screen/part_9.7.png)<br>
     * pid процесса, занимающего больше всего памяти<br>
-    ![pid процесса, занимающего больше всего памяти](src/screen/part_9.8.png)<br>
+    ![pid процесса, занимающего больше всего памяти](screen/part_9.8.png)<br>
     * pid процесса, занимающего больше всего процессорного времени<br>
-    ![pid процесса, занимающего больше всего процессорного времени](src/screen/part_9.9.png)<br>
+    ![pid процесса, занимающего больше всего процессорного времени](screen/part_9.9.png)<br>
 
 2. **htop**:<br>
     * Запуск утилиты **htop** <br>
-    ![Запуск htop](src/screen/part_9.10.png)<br>
+    ![Запуск htop](screen/part_9.10.png)<br>
     * Для выбора поля сортировки использовать `F6`:
         * PID<br>
-        ![PID](src/screen/part_9.11.png)<br>
+        ![PID](screen/part_9.11.png)<br>
         * PERCENT_CPU<br>
-        ![PERCENT_CPU](src/screen/part_9.12.png)<br>
+        ![PERCENT_CPU](screen/part_9.12.png)<br>
         * PERCENT_MEM<br>
-        ![PERCENT_MEM](src/screen/part_9.13.png)<br>
+        ![PERCENT_MEM](screen/part_9.13.png)<br>
         * TIME<br>
-        ![TIME](src/screen/part_9.14.png)<br>
-    * Для фильтра по SSHd используются клавиши `fn+F4`, `"sshd"`, `Enter`<br>![SSHd](src/screen/part_9.15.png)<br>
-    * Для поиска процессa syslog используются клавиши `fn+F3`, `"syslog"`, `Enter`<br>![Поиск syslog](src/screen/part_9.16.png)<br>
+        ![TIME](screen/part_9.14.png)<br>
+    * Для фильтра по SSHd используются клавиши `fn+F4`, `"sshd"`, `Enter`<br>![SSHd](screen/part_9.15.png)<br>
+    * Для поиска процессa syslog используются клавиши `fn+F3`, `"syslog"`, `Enter`<br>![Поиск syslog](screen/part_9.16.png)<br>
 
 ## Part 10. Использование утилиты **fdisk**
 1. 
@@ -224,7 +224,7 @@
 
 ## Part 11. Использование утилиты **df**
 1. Выводим команду `df /`<br>
-    ![Вывод команды df](src/screen/part_11.1.png)<br>
+    ![Вывод команды df](screen/part_11.1.png)<br>
     * Размер раздела: 17439092<br>
     * Размер занятого пространства: 5880652<br>
     * Размер свободного пространства: 10649540<br>
@@ -232,7 +232,7 @@
 * Единица измерения в выводе: Кб<br>
 
 2. Вывод команды `df -Th /`<br>
-    ![Вывод команды df -Th](src/screen/part_11.2.png)<br>
+    ![Вывод команды df -Th](screen/part_11.2.png)<br>
     * Размер раздела: 17<br>
     * Размер занятого пространства: 5.7<br>
     * Размер свободного пространства: 11<br>
@@ -243,41 +243,41 @@
 ## Part 12. Использование утилиты **du**
 1. 
     * Запуcк команды `du`<br>
-    ![Вывод команды du](src/screen/part_12.1.png)<br>
+    ![Вывод команды du](screen/part_12.1.png)<br>
     * Вывести размер папок `/home`, `/var`, `/var/log` с помощью команды `sudo du -s -h /home && sudo du -s -h /var && sudo du -s -h /var/log`<br>
-    ![Размер папок](src/screen/part_12.2.png)<br>
+    ![Размер папок](screen/part_12.2.png)<br>
     * Вывести размер всего содержимого в `/var/log` с помощью команды `sudo du -a -h /var/log`<br>
-    ![Размер всего содержимого в /var/log](src/screen/part_12.3.png)<br>
+    ![Размер всего содержимого в /var/log](screen/part_12.3.png)<br>
 
 ## Part 13. Установка и использование утилиты **ncdu**
 1. 
     * Устанавливаем утилиту **ncdu** командой `sudo apt install ncdu`<br>
-    ![Установка утилиты ncdu](src/screen/part_13.1.png)<br>
+    ![Установка утилиты ncdu](screen/part_13.1.png)<br>
     * Вывести размер папок с помощью команды `ncdu`:<br>
-    * `/home`<br>![Вывод команды ncdu /home](src/screen/part_13.2.png)<br>
-    * `/var`<br>![Вывод команды ncdu /var](src/screen/part_13.3.png)<br>
-    * `/var/log`<br>![Вывод команды ncdu /var/log](src/screen/part_13.4.png)<br>
+    * `/home`<br>![Вывод команды ncdu /home](screen/part_13.2.png)<br>
+    * `/var`<br>![Вывод команды ncdu /var](screen/part_13.3.png)<br>
+    * `/var/log`<br>![Вывод команды ncdu /var/log](screen/part_13.4.png)<br>
 
 ## Part 14. Работа с системными журналами
 1. 
     * Время последней успешной авторизации, имя пользователя и метод входа в систему<br>
-    ![Время последней успешной авторизации, имя пользователя и метод входа в систему](src/screen/part_14.1.png)<br>
+    ![Время последней успешной авторизации, имя пользователя и метод входа в систему](screen/part_14.1.png)<br>
     * Время авторизации: 15 июня 2022, 18:34<br>
     * Имя пользователя: evetteis<br>
     * Метод входа в систему: tty1<br>
     * Перезапустить службу SSHd: `sudo /etc/init.d/ssh restart`<br>
     * Сообщение о рестарте службы: `sudo cat /var/log/syslog`<br>
-    ![Сообщение о рестарте службы](src/screen/part_14.2.png)<br>
+    ![Сообщение о рестарте службы](screen/part_14.2.png)<br>
 
 ## Part 15. Использование планировщика заданий **CRON**
 1. 
     * Установка **CRON**: `sudo apt install cron`<br>
-    ![Установка CRON](src/screen/part_15.1.png)<br>
+    ![Установка CRON](screen/part_15.1.png)<br>
     * Запланировать задачу: `crontab -e`<br>
-    * Запланировать команду uptime каждые 2 минуты: `"*/2 * * * * uptime"`, `ctrl+x`, `y`, `Enter`<br>![Задача uptime](src/screen/part_15.2.png)<br>
+    * Запланировать команду uptime каждые 2 минуты: `"*/2 * * * * uptime"`, `ctrl+x`, `y`, `Enter`<br>![Задача uptime](screen/part_15.2.png)<br>
     * Список текущих заданий для **CRON** выводится командой `crontab -l`<br>
-    ![Список текущих заданий](src/screen/part_15.3.png)<br>
+    ![Список текущих заданий](screen/part_15.3.png)<br>
     * Строчки о выполнении в системных журналах выводим с помощью команды `sudo grep CRON /var/log/syslog`<br>
     * Удалить все задания из планировщика: `crontab -r`<br>
     * Список текущих заданий для **CRON** выводится командой `crontab -l`<br>
-    ![Список текущих заданий](src/screen/part_15.4.png)<br>
+    ![Список текущих заданий](screen/part_15.4.png)<br>
